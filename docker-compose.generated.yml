@@ -1,0 +1,88 @@
+version: "3.4"
+
+x-common: &common
+  restart: unless-stopped
+  volumes:
+    - ./data/.opencanary.conf:/root/.opencanary.conf
+    # uncomment below if running Samba
+    # - /var/log/samba-audit.log:/var/log/samba-audit.log
+  image: "opencanary"
+networks:
+  my_custom_network:
+    external: false
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.1.0/24
+
+services:
+  opencanary1:
+    <<: *common
+    image: "opencanary"
+    container_name: opencanary1
+    mac_address: "02:42:ac:11:00:01"
+    networks:
+      my_custom_network:
+        ipv4_address: 192.168.1.101
+    build:
+      context: .
+      dockerfile: Dockerfile.latest
+    ports:
+      - "8080:80"
+
+  opencanary2:
+    <<: *common
+    image: "opencanary"
+    container_name: opencanary2
+    mac_address: "02:42:ac:11:00:02"
+    networks:
+      my_custom_network:
+        ipv4_address: 192.168.1.102
+    build:
+      context: .
+      dockerfile: Dockerfile.latest
+    ports:
+      - "8081:80"
+
+  opencanary3:
+    <<: *common
+    image: "opencanary"
+    container_name: opencanary3
+    mac_address: "02:42:ac:11:00:03"
+    networks:
+      my_custom_network:
+        ipv4_address: 192.168.1.103
+    build:
+      context: .
+      dockerfile: Dockerfile.latest
+    ports:
+      - "8082:80"
+
+  opencanary4:
+    <<: *common
+    image: "opencanary"
+    container_name: opencanary4
+    mac_address: "02:42:ac:11:00:04"
+    networks:
+      my_custom_network:
+        ipv4_address: 192.168.1.104
+    build:
+      context: .
+      dockerfile: Dockerfile.latest
+    ports:
+      - "8083:80"
+
+  opencanary5:
+    <<: *common
+    image: "opencanary"
+    container_name: opencanary5
+    mac_address: "02:42:ac:11:00:05"
+    networks:
+      my_custom_network:
+        ipv4_address: 192.168.1.105
+    build:
+      context: .
+      dockerfile: Dockerfile.latest
+    ports:
+      - "8084:80"
+
